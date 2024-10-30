@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('layout/header'); -%>
+    <body>
+        <%- include('layout/navbar.ejs'); -%>
+        <header class="masthead" style="background-color: #808080;">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="post-heading">
+                            <h1>Book G Test</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+  
+    <div class="container container-small pb-5">
+      <% if (typeof error !== 'undefined') { %>
+      <div class="alert alert-danger"><%= error %></div>
+      <% if (typeof licenseNo !== 'undefined') { %>
+      <form method="POST" action="/fetch-user">
+        <input type="hidden" name="licenseNo" value="<%= licenseNo %>" />
+        <a href="/g2" class="btn btn-link">Go back to G2 Page</a>
+      </form>
+      <% } %> <% } else if (typeof user !== 'undefined') { %>
+      <h2>User Information</h2>
+      <p><strong>First Name:</strong> <%= user.firstName %></p>
+      <p><strong>Last Name:</strong> <%= user.lastName %></p>
+      <p><strong>License Number:</strong> <%= user.licenseNo %></p>
+      <p><strong>Age:</strong> <%= user.age %></p>
+      <h2>Car Information</h2>
+      <form method="POST" action="/update-user">
+        <input type="hidden" name="licenseNo" value="<%= user.licenseNo %>" />
+        <div class="mb-3">
+          <label for="carMake" class="form-label">Car Make</label>
+          <input
+            type="text"
+            class="form-control"
+            id="carMake"
+            name="carMake"
+            value="<%= user.carDetails.make %>"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="carModel" class="form-label">Car Model</label>
+          <input
+            type="text"
+            class="form-control"
+            id="carModel"
+            name="carModel"
+            value="<%= user.carDetails.model %>"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="carYear" class="form-label">Car Year</label>
+          <input
+            type="number"
+            class="form-control"
+            id="carYear"
+            name="carYear"
+            value="<%= user.carDetails.year %>"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="plateNo" class="form-label">License Plate Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="plateNo"
+            name="plateNo"
+            value="<%= user.carDetails.plateNo %>"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+      <% } else { %>
+      <form method="POST" action="/fetch-user">
+        <div class="mb-3">
+          <label for="licenseNo" class="form-label">Enter License Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="licenseNo"
+            name="licenseNo"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Fetch User</button>
+      </form>
+      <% } %>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
